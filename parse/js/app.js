@@ -2,7 +2,9 @@
     script for the index.html file
 */
 
-Parse.initialize("HwGkNK09YRPy3ZajicPwpZMfX9vqCyc4ghFl2eh7", "14BQF3zAPvaOR1sh6aEzXX5Wk1LTnBFQopjr1Rbj");
+Parse.initialize("rnPVLff4nz9OW4qu9GnkdD18TV4AzzxfLducfGQh", "x62CpPBIqQwvj2nW1eRSo50VWvUMxFSoyJG8NuVB"); //kevin
+//Parse.initialize("HwGkNK09YRPy3ZajicPwpZMfX9vqCyc4ghFl2eh7", "14BQF3zAPvaOR1sh6aEzXX5Wk1LTnBFQopjr1Rbj"); //michele
+//Parse.initialize("KbYkFVZmXgA44eI4GClBFlSQTmNqUSP0Kz2oe3IG", "6XpinlUENQPAWGyNQwKcSd3vZz8ihOGBy82leaAs"); //me
 
 $(function() {
     'use strict';
@@ -12,6 +14,7 @@ $(function() {
     //new query that will return all tasks ordered by createAt
     var tasksQuery = new Parse.Query(Task);
     tasksQuery.ascending('createdAt');
+    //tasksQuery.notEqualTo('done', true); //this deletes completed tasks
 
     //reference to the task list element
     var tasksList = $('#tasks-list');
@@ -54,9 +57,20 @@ $(function() {
     function renderTasks() {
         tasksList.empty();
         tasks.forEach(function(task) {
-           $(document.createElement('li'))
+            var li = $(document.createElement('li'))
                .html(task.get('title'))
-               .appendTo(tasksList);
+               .addClass(task.get('done') ? 'completed-task' : '')
+               .appendTo(tasksList)
+               .click(function() {
+                   task.set('done', !task.get('done'));
+                   task.save().then(renderTasks, displayError);
+               });
+            $(document.createElement('span'))
+                .raty({readOnly: true,
+                    score: (task.get('rating') || 0),
+                    hints: ['crap', 'awful', 'ok', 'nice', 'awesome']
+                })
+                .appendTo(li)
         });
     }
 
@@ -68,9 +82,12 @@ $(function() {
         var title = titleInput.val();
         var task = new Task();
         task.set('title', title);
+        task.set('rating', $('#rating').raty('score'));
+
         task.save().then(fetchTasks, displayError)
             .then(function() {
                 titleInput.val('');
+                $('rating').raty('cancel', true);
             });
 
         return false;
@@ -78,6 +95,9 @@ $(function() {
 
     //go and fetch tasks from Parse
     fetchTasks();
+
+    //enable the rating ui element
+    $('#rating').raty();
 
     window.setInterval(fetchTasks, 1000)
 
