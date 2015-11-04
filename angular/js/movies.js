@@ -1,14 +1,6 @@
-<<<<<<< HEAD
-
-angular.module('Movies', ['ui.router'])
-    .factory('moviesJSON', function($http) {
-        return $http.get('data/movies-2014.min.json')
-    })
-    .config(function($stateProvider, $urlRouterProvider) {
-=======
 /*
-    script file for the movies.html file
-*/
+ script file for the movies.html file
+ */
 
 //define a new Angular module named 'MoviesApp'
 //that depends upon the 'ui.router' module
@@ -60,7 +52,6 @@ angular.module('MoviesApp', ['ui.router'])
         //a url for the Angular view that should be put into the
         //empty div in movies.html, and the Angular controller to
         //invoke for that view
->>>>>>> 0e1f3c03a332ce37c172bdee43ad742a11ba4994
         $stateProvider
             .state('list', {
                 url: '/movies',
@@ -68,46 +59,6 @@ angular.module('MoviesApp', ['ui.router'])
                 controller: 'MoviesController'
             })
             .state('detail', {
-<<<<<<< HEAD
-                url: '/movies:/:index',
-                templateUrl: 'views/movies-detail.html',
-                controller: 'MovieDetailController'
-            });
-    })
-    .controller('MovieDetailController', function($scope, $stateParams, moviesJSON) {
-        moviesJSON.then(function(results) {
-            $scope.movie = results.data[$stateParams.index]
-        });
-    })
-    .controller('MoviesController', function($scope, moviesJSON) { //$http used to do ajax requests
-        var ratingsMap = {
-            'Not Rated': 0,
-            'G': 1,
-            'PG': 2,
-            'PG-13': 3,
-            'R': 4,
-            'NC-17': 5,
-            'X': 6
-        };
-        moviesJSON.then(function(results) {
-            $scope.movies = results.data.map(function(movie) {
-                movie.ratingOrdinal = ratingsMap[movie.rating];
-                return movie;
-            });
-
-            $scope.distributors = _.uniq(_.pluck($scope.movies, 'distributor'))
-        });
-
-        $scope.setSort = function(propertyName) {
-            if ($scope.sortCol === propertyName) {
-                $scope.sortReverse = !$scope.sortReverse;
-            } else {
-                $scope.sortCol = propertyName;
-                $scope.sortReverse = false;
-            }
-        }
-    });
-=======
                 url: '/movies/:movieId', //movie.id will be put on the end of the URL
                 templateUrl: 'views/movies-detail.html',
                 controller: 'MovieDetailController'
@@ -169,4 +120,3 @@ angular.module('MoviesApp', ['ui.router'])
         });
 
     }); //MoviesApp module
->>>>>>> 0e1f3c03a332ce37c172bdee43ad742a11ba4994

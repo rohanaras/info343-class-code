@@ -1,18 +1,6 @@
+
 <h1>Movies from 2014</h1>
 
-<<<<<<< HEAD
-<p>
-    <input type="search" class="form-control" placeholder="type to filter" ng-model="query"/>
-</p>
-
-<p class="form-group">
-    <label for="distSel">Distributor</label>
-    <select ng-model="currentDistributor"
-            ng-options="d for d in distributors"
-            class="form-control">
-    </select>
-</p>
-=======
 <div class="form-group">
     <label for="titleSearch">Title:</label>
     <input type="search" id="titleSearch" class="form-control" placeholder="type to filter by title"
@@ -25,28 +13,10 @@
             ng-model="selectedDist" ng-options="dist for dist in distributors">
     </select>
 </div>
->>>>>>> 0e1f3c03a332ce37c172bdee43ad742a11ba4994
 
 <table class="table">
     <thead>
     <tr>
-<<<<<<< HEAD
-        <th><a ng-click="setSort('title')" href="#">Title</a></th>
-        <th><a ng-click="setSort('ratingOrdinal')" href="#">Rating</a></th>
-        <th><a ng-click="setSort('released')" href="#">Released</a></th>
-        <th><a ng-click="setSort('gross')" href="#">Gross Sales</a></th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr ng-repeat="movie in movies | filter : {title: query} | filter : {distributor: currentDistributor}
-            | orderBy : sortCol : sortReverse">
-        <td><a ng-href="#/movies/{{$index}}">{{movie.title}}</a></td>
-        <td>{{movie.rating}}</td>
-        <td>{{movie.released | date : 'MMM d yy'}}</td>
-        <td>{{movie.gross | currency}}</td>
-    </tr>
-    </tbody>
-=======
         <th><a href="#" ng-click="setSortProp('title')">Title</a></th>
         <th><a href="#" ng-click="setSortProp('ratingOrdinal')">Rating</a></th>
         <th><a href="#" ng-click="setSortProp('released')">Released</a></th>
@@ -65,5 +35,4 @@
     </tr>
     </tbody>
 
->>>>>>> 0e1f3c03a332ce37c172bdee43ad742a11ba4994
 </table>
